@@ -1,1 +1,1 @@
-# Doc_SA
+# Documentación de la fase 1 para el proyecto de laboratorio
