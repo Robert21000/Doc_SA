@@ -179,6 +179,7 @@ diseño responsive, intuitivo, etc.
 | **Integrante 3** | Validación de los campos correctos y envio de ifnormacion a renap.|
 | **Integrante 3** | Validar si la persona es extranjera o no para requerir más campos |
 | **Integrante 3** | Solicitar datos correspondientes al momento de votar |
+| **Integrante 3** | apartado de Login |
 | **Integrante 3** | requerir token de QR temporal por 30seg |
 | **Integrante 3** | Analisis facial de la persona por mediod de AWS recognition|
 | **Integrante 3** | validar que las elecciones estén disponibles |
@@ -206,8 +207,8 @@ para que pueda trabajar de una manera independiente las funciones del back y del
 ### DashBoard (Frontend)
 |Integrante| Tarea |
 |------ |----|
-| **Integrante 4** | Calculos correspondientes solicitados para las gráficas en tiempo real .|
-| **Integrante 4** | Conteo por Región.|
+| **Integrante 4** | Obtencio de datos para graficar .|
+| **Integrante 4** | Obtener datos para reportes|
 | **Integrante 4** |Mostrar datos en Grafana.|
 
 
@@ -220,5 +221,79 @@ para que pueda trabajar de una manera independiente las funciones del back y del
 
 
 ### Arquitectura del proyecto
+|Integrante| Tarea |
+|------ |----|
 | **Integrante 2** |Uso de Pipelines, Gitlab y Orquestador|
 | **Integrante 2** |Despliegue de la aplicación|
+
+
+### Redes
+Los micro servicios se conectarán bajo una red privada, interna para que no tenga problemas
+de comunicación entre microservicios, se publicará el dominio y para conectar con los demás dominios
+por medio de la ip Pública para tener acceso al exterior
+
+
+### Arquitectura del proyecto
+|Integrante| Tarea |
+|------ |----|
+| **Integrante 2** |Uso de Pipelines, Gitlab y Orquestador|
+| **Integrante 2** |Despliegue de la aplicación|
+
+
+## Contratos
+### Elecciones
+|Tipo| Endpoint | Data
+|------ |----|------|
+| POST | "api/guardar/elecciones" | {titulo:"",descr:"",fechaIni:"dd-mm-YY",fechaFin:"",Ubicaion:""}|
+| POST |"api/guardar/candidato"| {partido:"",imagen:"",nombre:"","puesto":"lugar",id_elecciones:id}|
+| GET | "api/obtener/elecciones" |[{titulo:"",descr:"",fechaIni:"dd-mm-YY",fechaFin:"",Ubicaion:""}]|
+| GET |"api/obtener/candidatos" | [{partido:"",imagen:"",nombre:"","puesto":"lugar",id_elecciones:id}]|
+| GET | "api/obtener/elecciones/id" |{titulo:"",descr:"",fechaIni:"dd-mm-YY",fechaFin:"",Ubicaion:""}|
+| GET |"api/obtener/candidatos/id" | {partido:"",imagen:"",nombre:"","puesto":"lugar",id_elecciones:id}|
+
+
+### Ciudadanos
+|Tipo| Endpoint | Data
+|------ |----|------|
+| POST | "api/guardar/ciudadano" | {nombre:"",cui:00,tel:00,foto:"",pin:"",dep:"",mun:"",tipo:"extranjero",pais:"",estado:""}|
+| GET |"api/obtener/ciudadano:id"| {nombre:"",cui:00,tel:00,foto:"",pin:"",dep:"",mun:"",tipo:"nacional",pais:"",estado:""}|
+| POST | "api/verificar/ciudadano/apto" |{cui:00}|
+| GET |"api/obtener/apto"       | {estado:"aceptado/rechazado"}|
+| GET | "api/obtener/ciudadanos/_pais" |[{nombre:"",cui:00,tel:00,foto:"",pin:"",dep:"",mun:"",tipo:"nacional",pais:"",estado:""}]|
+
+### Votacion
+|Tipo| Endpoint | Data
+|------ |----|------|
+| POST | "api/login/" | {cui:00,pin:"",token/porcentaje:00}|
+| GET |"api/obtener/opciones/presidente"| {nombre:"",cui:00,tel:00,foto:"",pin:"",dep:"",mun:"",tipo:"nacional",pais:"",estado:""}|
+| GET | "api/verificar/vicepresiente" |{cui:00}|
+| POST | "api/votacion/ciudadano" | {id_ciudadano:00,id_candidato::00,voto:1}|
+
+
+### Monitoreo
+|Tipo| Endpoint | Data
+|------ |----|------|
+| GET | "api/votos/id_candidato" | {nombre:"",foto:00,total:00}|
+| GET | "api/votos/porcentaje/id_candidato" | {nombre:"",foto:00,porcentaje:00}|
+| GET |"api/votos/id_ubicacion"| [{nombre:"",total:00,foto:"",ubicacion:""}]|
+|GET  |"api/votos/porcentaje/id_ubicacion"| [{nombre:"",porcentaje:00,foto:"",ubicacion:""}]|
+| GET | "api/votos/puesto" |[{nombre:"",total:00,foto:"",puesto:""}]|
+| GET | "api/votos/porcentaje/puesto" |[{nombre:"",porcentaje:00,foto:"",puesto:""}]|
+| GET |"api/votos/partidos"  | [{partido:"",total:00,foto:""}]|
+| GET |"api/votos/porcentaje/partidos"  | [{partido:"",porcentaje:00,foto:""}]|
+
+
+
+### Auditoria
+|Tipo| Endpoint | Data
+|------ |----|------|
+| GET | "api/votacion/auditoria/" | {cui:00,voto:"",fecha:"dd-mm-YY",Hora:"",Localidad:""}|
+
+
+
+
+
+
+
+
+
