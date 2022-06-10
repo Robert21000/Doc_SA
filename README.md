@@ -13,23 +13,26 @@ Para el Backend se utilzará los lenguajes de programación NodeJs con el framew
 para el segundo legunaje se utilizará python con el framework de Flask.
 
 ### Base de Datos
-En la base de datos se utilizará una de tipo relacional, por sus propiedades de ACID, ya que esta
-aplicación por su naturaleza necesita seguridad, y las base de datos relacionales suelen ser más seguras
-además tiene opciones accesibles como mysql o postgresql, estas bases de datos son candidatas
-ya que suelen comunicarse de manera fácil con los frameworks mencionados anteriormente.
+En la base de datos se utilizará una de tipo relacional, por sus propiedades de ACID, 
+ya que esta aplicación por su naturaleza necesita seguridad, y las base de datos relacionales 
+suelen ser más seguras, además tiene opciones accesibles como mysql o postgresql, 
+estas bases de datos son candidatas, y suelen comunicarse de manera fácil con 
+los frameworks mencionados anteriormente.
 
 
 ### Aplicación Responsiva
- Para la parte de la aplicación responsiva, se hará utilziando la herramienta de Boostrap, y al mismo tiempo
- utilizar sus propiedades para un mejor diseño de la aplicación.
+ Para la parte de la aplicación responsiva, se hará utilziando la herramienta 
+ de Boostrap, y al mismo tiempo utilizar sus propiedades para un mejor diseño 
+ de la aplicación.
 
 
 ## Comunicación entre los servidores
 
 Para la comunicación entre los servidores se piensa utilizar datos en formato Json
-ya que es un estándard de comunicación entre lenguajes de comunicación. Dependiendo de la tecnología
-se puede utilizar api res, sin embargo dado que existe en python la librería requests, se pueden
-comunicar via http. (esto se describirá más a detalle en los siguientes puntos).
+ya que es un estándard de comunicación entre lenguajes de comunicación. 
+Dependiendo de la tecnología, se puede utilizar API REST, sin embargo,
+dado que existe en python la librería requests, se puedencomunicar via http. 
+(esto se describirá más a detalle en los siguientes puntos).
 
 
 ## Diagrama de Autenticación
@@ -88,21 +91,22 @@ comunicar via http. (esto se describirá más a detalle en los siguientes puntos
 
 
 
+## Descripción de la seguridad de la aplicación.
 
+La seguridad de la aplicación primero que nada inicia con la implementación de una base de datos relacional, de manera que 
+sean durables entre otras. En la parte de la autenticación se le sumará un 2FA, para agregarle seguridad en el momento de la votación.
+En este caso se piensa agregar un código QR temporal, osea utilizar un 2FA TOTP. En la parte del registro se buscará si es apto para votar
+o si su expediente no deja que vote. Luego de eso en la parte del envío de la data se utilizará JWT para encriptar la cadena con llaves y
+poder modificar que el token sea temporal. Y por último agregar la tecnología BlockChain al final del voto para serciorase que
+el voto sea aceptado por las entidades más importantes, quienes su trabajo es auditar la transparencia.
 
-    
+## Descripción del uso de la tecnología blockchain.
+Como se mencionaba anteriormente la tecnología blockchain nos ayudará a poder utilizar a las entidades que se encargan de la transparencia
+a funcionar como nodos y que en el momento de cada voto se pueda sercioarar que el voto sea válido y no se haya cometido algún fraude
+y quede registrado sin que esos datos puedan editarse.
 
-
-
-
-
-
-
-## Base de datos
- ### Atomicidad u
- Un cambio debe completarse en su totalidad o no modificar nada en absoluto.
- ### Consistencia
- Cualquier cambio debe conducir de un estado válido de la base de datos a otro estado válido de acuerdo con las restricciones y el esquema de datos.
- ### Aislamiento (Isolation): 
- un cambio no debe afectar a otros cambios que se estén ejecutando al mismo tiempo sobre la base de datos.
- Durabilidad: una vez completado el cambio, éste debe conservarse, aunque se produzcan fallos en la base de datos o el sistema completo.
+## Documentación de las Pipelines para los servicios.
+Para el caso de los pipelines se utilizarán los que comunmente se trabajan, para garantizar que el softwre cumpla con lo requerido para 
+poder ser desplegado, cada una de los microservicios serán testeados para saber si cada una de sus funcionalidades están correctas
+luego se procede a construir las imágenes y por último de desplegarlas, teniendo en consideración que por cada microservicio que falle
+podrá funcionar la demás aplicación sin que los demás microservicios sean afectados y funcionar correctamente.
